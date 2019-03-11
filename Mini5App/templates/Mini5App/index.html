@@ -1,0 +1,40 @@
+{% extends 'Mini5App/base.html' %}
+
+{% block header %}
+{% if user.is_authenticated %}
+<h1>Welcome {{ user.name }}</h1>
+<p>to Your Page</p>
+{% else %}
+<h1>Welcome Visitor</h1>
+{% endif %}
+{% endblock header %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<p><a href="{% url 'addRecipe' %}">Add New Recipe</a></p>
+<p><a href="{% url 'logout' %}">Log Out</a></p>
+<hr>
+{# If they do have entries #}
+{% if allItems %}
+<div class="gridContainer">
+    {% for eachItem in allItems %}
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{ eachItem.image }}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{ eachEntry.name }}</h5>
+            <p class="card-text"> <h4>{{ eachItem.recipe_name }}</h4> {{ eachItem.description }}</p>
+            <a href="{% url 'edit' eachItem.id %}">Edit</a>
+            <a href="{% url 'delete' eachItem.id %}">Delete</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<h2>No Recipes in List</h2>
+{% endif %}
+
+{# This is for users not logged in #}
+{% else %}
+<p><a href="{% url 'newUser' %}">Create New Account</a> or <a href="{% url 'login' %}">Log in</a></p>
+{% endif %}
+{% endblock content %}

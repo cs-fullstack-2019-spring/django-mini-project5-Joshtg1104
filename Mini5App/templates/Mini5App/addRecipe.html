@@ -1,0 +1,14 @@
+{% extends 'Mini5App/base.html' %}
+
+{% block header %}
+<h1>Enter a New Recipe</h1>
+{% endblock header %}
+
+{% block content %}
+<form action="{% url 'details' %}" method="post">
+    {% csrf_token %}
+    {{ foodform.as_p }}
+    <button>Submit</button>
+</form>
+<a href="{% url 'index' %}">Cancel</a>
+{% endblock content %}
